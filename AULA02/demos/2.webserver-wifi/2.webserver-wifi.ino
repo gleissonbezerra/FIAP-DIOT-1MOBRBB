@@ -3,7 +3,8 @@
 const char* ssid = "";
 const char* password = "";
 
-int LED = 2;
+#define LED 2
+
 WiFiServer server(80);
 
 void setup() {
@@ -31,7 +32,7 @@ void setup() {
 void loop() {
   WiFiClient client = server.available();
   if (client) {
-    Serial.println("New Client.");
+    Serial.println("Novo cliente.");
     String currentLine = "";
     while (client.connected()) {
       if (client.available()) {
@@ -42,8 +43,8 @@ void loop() {
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
             client.println();
-            client.print("<a href=\"/LED?HIGH\">LIGAR</a><br>");
-            client.print("<a href=\"/LED?LOW\">DESLIGAR</a><br>");
+            client.print("<a href=\"/ON\">LIGAR</a><br>");
+            client.print("<a href=\"/OFF\">DESLIGAR</a><br>");
             client.println();
             break;
           } else {
@@ -53,15 +54,16 @@ void loop() {
           currentLine += c;
         }
         
-        if (currentLine.endsWith("GET /LED?HIGH")) {
+        if (currentLine.endsWith("GET /ON")) {
           digitalWrite(LED, HIGH);
-        }else if (currentLine.endsWith("GET /LED?LOW")) {
+        }else if (currentLine.endsWith("GET /OFF")) {
           digitalWrite(LED, LOW);;
         }
 
       }
     }
+    delay(1);
     client.stop();
-    Serial.println("Client Disconnected.");
+    Serial.println("Cliente desconectado.");
   }
 }

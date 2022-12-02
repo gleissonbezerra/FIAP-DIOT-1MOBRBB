@@ -23,6 +23,10 @@ char auth[] = BLYNK_AUTH_TOKEN;
 #define W5100_CS  10
 #define SDCARD_CS 4
 
+#define LED 2
+
+//bool led = false;
+
 BlynkTimer timer;
 
 // This function is called every time the Virtual Pin 0 state changes
@@ -32,6 +36,8 @@ BLYNK_WRITE(V0)
   int value = param.asInt();
 
   Serial.println(value);
+
+  digitalWrite(LED, value);
 
   // Update state
   Blynk.virtualWrite(V1, value);
@@ -61,6 +67,8 @@ void setup()
 
   pinMode(SDCARD_CS, OUTPUT);
   digitalWrite(SDCARD_CS, HIGH); // Deselect the SD card
+
+  pinMode(LED, OUTPUT);
 
   Blynk.begin(auth);
   // You can also specify server:
