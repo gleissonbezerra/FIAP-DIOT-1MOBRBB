@@ -1,7 +1,7 @@
 #include <WiFi.h>
 
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "GNET 2.4";
+const char* password = "F23700623D8D24";
 
 #define LED 2
 
